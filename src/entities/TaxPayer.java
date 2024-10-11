@@ -66,4 +66,25 @@ public class TaxPayer {
     public Double grossTax(){
         return servicesTax() + capitalTax() + salaryTax();
     }
+    public double taxRebate(){
+       double impostoDesconto = grossTax() * 0.30;
+       double gastosGerais = getHealthSpending() + getEducationSpending();
+       double abatimento;
+       if(gastosGerais < impostoDesconto){
+           abatimento = gastosGerais;
+       }else{
+           abatimento = impostoDesconto;
+       }
+       return abatimento;
+    }
+    public Double netTax(){
+        return grossTax() - taxRebate();
+    }
+
+    @Override
+    public String toString() {
+        return "Imposto bruto total: " + String.format("%.2f%n",grossTax())
+                + "Abatimento: " + String.format("%.2f%n",taxRebate())
+                + "Imposto devido: " + String.format("%.2f%n",netTax());
+    }
 }
